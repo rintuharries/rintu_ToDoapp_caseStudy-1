@@ -11,9 +11,10 @@ function ajax(){
       var output =""
       output += "<table>"
       output+="<tr><th><u>Id</u></th><th><u>Title</u></th><th><u>Status</u></th></tr>";
-      var checkedCount = 0;
+      var count = 0;
       for(var i=0;i<response.length;i++){
         var status=response[i].completed;
+    
         output += "<tr><td>" + response[i].id + "</td>"+"<td>" + response[i].title+"</td>"
  
         if(status==true){
@@ -21,8 +22,7 @@ function ajax(){
          }
           
          if(status==false){
-          output+="<td>"+'<input type="checkbox">'+"</td></tr>";
-          validate();
+          output+="<td>"+'<input type="checkbox">'+"</td></tr>"
         }   
       }  
           
@@ -33,21 +33,17 @@ function ajax(){
  }
 }
 function validate(){    
-var inputs = document.getElementsByTagName("input"); //or document.forms[0].elements;
-var cbs = []; //will contain all checkboxes
-var checked = []; //will contain all checked checkboxes
-for (var i = 0; i < inputs.length; i++) {
-  if (inputs[i].type == "checkbox") {
-    cbs.push(inputs[i]);
-    if (inputs[i].checked) {
-      checked.push(inputs[i]);
+var count=0;
+  $("#isCheck").change(function () {
+        
+    if($('input:checkbox').is(':checked')){
+        count++;
     }
-  }
-}
-var nbCbs = cbs.length; //number of checkboxes
-var nbChecked = checked.length; //number of checked checkboxes
+    console.log(count);
+            
+  });  
 var promise=new Promise(function(resolve,reject){
-  if(nbChecked==5){
+  if(count==5){
     resolve("Congrats .5 Tasks have been successfully completed")
   }
 });
