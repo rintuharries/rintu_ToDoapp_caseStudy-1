@@ -1,9 +1,9 @@
 
-Validate=document.getElementById("validateform")
+ const Validate=document.getElementById("validateform")
 function btnClicked(){ 
 if( document.getElementById("username").value == "admin" && document.getElementById("password").value == "12345")
   {
-   window.open("todo.html")
+    Validate.setAttribute("action","todo.html")
    alert("login successfull");
   }
   else {
