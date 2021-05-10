@@ -9,40 +9,44 @@ function ajax(){
      if(this.readyState==4&&this.status==200){
       var response=JSON.parse(Http.responseText);
       var output =""
+      var checked=""
       output += "<table>"
       output+="<tr><th><u>Id</u></th><th><u>Title</u></th><th><u>Status</u></th></tr>";
-      var count = 0;
       for(var i=0;i<response.length;i++){
         var status=response[i].completed;
-    
+        checked='checked'
         output += "<tr><td>" + response[i].id + "</td>"+"<td>" + response[i].title+"</td>"
  
         if(status==true){
-         output+="<td>"+'<input type="checkbox" checked="checked" disabled=true>'+"</td></tr>";       
+         
+         output+="<td>"+'<input type="checkbox" disabled="disabled" '+checked+'>'+"</td></tr>"; 
          }
           
          if(status==false){
           output+="<td>"+'<input type="checkbox">'+"</td></tr>"
+            var countval= $("[type='checkbox']:checked").length;
+
         }   
-      }  
-          
+      }   
         output += "</table>"
-        document.getElementById("demo").innerHTML=output;    
+        
+        document.getElementById("demo").innerHTML=output;  
+         console.log(countval);
+       }
     } 
       
  }
-}
-function validate(){    
-var count=0;
-  $("#isCheck").change(function () {
-        
-    if($('input:checkbox').is(':checked')){
-        count++;
-    }
-    console.log(count);
-            
-  });  
-var promise=new Promise(function(resolve,reject){
+function validate(){
+   const checkboxes=document.querySelectorAll('checkbox');
+    var count=0;
+     $('body').on('change','input[type=checkbox]',function(e){
+      if(checkboxes.checked){
+        count+=1;
+      }
+    
+     });
+
+var promise=new Promise(function(resolve,reject){  
   if(count==5){
     resolve("Congrats .5 Tasks have been successfully completed")
   }
@@ -55,18 +59,6 @@ promise.then(function(s){
 
 
 
-// function count(){
-//   var checkedCount = 0;
-//   document.querySelectorAll('checkbox').onchange = function() {
-//   for(var i = 0; i < status.length; i++) {
 
-//     if(status[i].checked==true) {
-//       checkedCount++;
-//     }
-//     console.log(checkedCount);
-
-//     }
-//     }
-//   } 
 
  
