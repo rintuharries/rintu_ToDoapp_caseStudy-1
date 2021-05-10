@@ -24,29 +24,29 @@ function ajax(){
           
          if(status==false){
           output+="<td>"+'<input type="checkbox">'+"</td></tr>"
-            var countval= $("[type='checkbox']:checked").length;
-
+            // var countval= $("[type='checkbox']:checked").length;
         }   
       }   
         output += "</table>"
         
         document.getElementById("demo").innerHTML=output;  
-         console.log(countval);
+        //  console.log(countval);
        }
     } 
+   
       
  }
 function validate(){
-   const checkboxes=document.querySelectorAll('checkbox');
-    var count=0;
-     $('body').on('change','input[type=checkbox]',function(e){
+  const checkboxes=document.querySelectorAll('checkbox');
+  var count=0;
+ var promise=new Promise(function(resolve,reject){  
+     $('body').on('change','input[type=checkbox]',function(){
+      for(var i=0;i<checkboxes.length;i++){
       if(checkboxes.checked){
         count+=1;
       }
-    
+      }
      });
-
-var promise=new Promise(function(resolve,reject){  
   if(count==5){
     resolve("Congrats .5 Tasks have been successfully completed")
   }
