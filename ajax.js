@@ -1,15 +1,23 @@
 $(document).ready(function () { 
-
-  $('body').on('change','input[type=checkbox]',function(e) {
-    var count=0;                           
-   if( $(this).is(':checked')){             
-      
-     console.log("check") 
+  var count=0;
+  $('body').on('change','input[type=checkbox]',function(e) {                          
+   if( $(this).is(':checked')){               
+      count++;
+   }else{
+     count--;
+   }
+   var promise=new Promise(function(resolve,reject){
+    if(count==5)
+    {
+      resolve("Congrats.5 Tasks have been successfully completed")
     }
-    count++;
-    console.log(count)
-});
-    
+  })
+  promise.then(function(s){
+    alert(s);
+  })
+  
+   console.log(count)
+}); 
                     // FETCHING DATA FROM JSON FILE
                     $.getJSON("https://jsonplaceholder.typicode.com/todos", 
                             function (data) {
