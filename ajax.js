@@ -1,64 +1,55 @@
-function ajax(){
+$(document).ready(function () { 
 
-    const Http = new XMLHttpRequest();
-    const url='https://jsonplaceholder.typicode.com/todos';
-    Http.open("GET", url);
-    Http.send();
-    
-    Http.onreadystatechange = function() {
-     if(this.readyState==4&&this.status==200){
-      var response=JSON.parse(Http.responseText);
-      var output =""
-      var checked=""
-      output += "<table>"
-      output+="<tr><th><u>Id</u></th><th><u>Title</u></th><th><u>Status</u></th></tr>";
-      for(var i=0;i<response.length;i++){
-        var status=response[i].completed;
-        checked='checked'
-        output += "<tr><td>" + response[i].id + "</td>"+"<td>" + response[i].title+"</td>"
- 
-        if(status==true){
-         
-         output+="<td>"+'<input type="checkbox" disabled="disabled" '+checked+'>'+"</td></tr>"; 
-         }
-          
-         if(status==false){
-          output+="<td>"+'<input type="checkbox">'+"</td></tr>"
-            // var countval= $("[type='checkbox']:checked").length;
-        }   
-      }   
-        output += "</table>"
-        
-        document.getElementById("demo").innerHTML=output;  
-        //  console.log(countval);
-       }
-    } 
-   
+  $('body').on('change','input[type=checkbox]',function(e) {
+    var count=0;                           
+   if( $(this).is(':checked')){             
       
- }
-function validate(){
-  const checkboxes=document.querySelectorAll('checkbox');
-  var count=0;
- var promise=new Promise(function(resolve,reject){  
-     $('body').on('change','input[type=checkbox]',function(){
-      for(var i=0;i<checkboxes.length;i++){
-      if(checkboxes.checked){
-        count+=1;
-      }
-      }
-     });
-  if(count==5){
-    resolve("Congrats .5 Tasks have been successfully completed")
-  }
+     console.log("check") 
+    }
+    count++;
+    console.log(count)
 });
-promise.then(function(s){
-  alert(s);
-})
-}
+    
+                    // FETCHING DATA FROM JSON FILE
+                    $.getJSON("https://jsonplaceholder.typicode.com/todos", 
+                            function (data) {
+                        var response = '';
+                          var count="" 
+                        // ITERATING THROUGH OBJECTS
+                        $.each(data, function (key, value) {
+  
+                            //CONSTRUCTION OF ROWS HAVING
+                            // DATA FROM JSON OBJECT
+                            response+='<table>';
+                            response += '<tr>';
+                            if(value.completed==true)  {
+                            response += '<td>' + '<input type="checkbox" checked="checked" disabled="disabled">'
+                                 + '</td>';
+                            }
+                           
+                            else  {
+                              response += '<td>' + '<input type="checkbox" id="#btnClick" >'
+                                 + '</td>';
+
+                            }   
+  
+                            response+= '<td>' + 
+                                value.title + '</td>';
+  
+  
+                            response += '</tr>';
+                            response+='</table>';
+
+                        });
+                          
+                      
+                        //INSERTING ROWS INTO TABLE 
+                        $('#demo').append(response);
+                      
+                    });
+                             
 
 
-
-
-
-
- 
+                  });
+                 
+  
